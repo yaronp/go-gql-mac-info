@@ -1,0 +1,15 @@
+type Query {
+  sysInfo: SoftwareData
+}
+
+type SoftwareData {
+      BootMode : String
+      BootVolume : String
+      KernelVersion : String
+      LocalHostname: String
+      OsVersion: String
+      SecureVm: String
+      SystemIntegrity: String
+      Uptime: String
+      UserName: String
+}
