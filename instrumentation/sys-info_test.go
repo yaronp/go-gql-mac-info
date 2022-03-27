@@ -1,6 +1,9 @@
 package instrumentation
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 const outputData = `{"SPSoftwareDataType" : [{
 	"_name" : "os_overview",
@@ -34,4 +37,8 @@ func TestSystemProfiler(t *testing.T) {
 	if *r != outputDataStruct {
 		t.Error("output is not the same")
 	}
+}
+
+func TestApplicationData(t *testing.T) {
+	fmt.Println(ApplicationData())
 }

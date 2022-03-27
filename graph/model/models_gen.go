@@ -2,6 +2,17 @@
 
 package model
 
+type ApplicationsData struct {
+	Name         *string   `json:"Name"`
+	ArchKind     *string   `json:"ArchKind"`
+	LastModified *string   `json:"LastModified"`
+	ObtainedFrom *string   `json:"ObtainedFrom"`
+	Path         *string   `json:"Path"`
+	SignedBy     []*string `json:"SignedBy"`
+	Version      *string   `json:"Version"`
+	Info         *string   `json:"Info"`
+}
+
 type SoftwareData struct {
 	BootMode        *string `json:"BootMode"`
 	BootVolume      *string `json:"BootVolume"`

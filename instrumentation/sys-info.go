@@ -3,6 +3,8 @@ package instrumentation
 import (
 	"encoding/json"
 	"os/exec"
+	"sync"
+	"time"
 )
 
 // system_profiler SPSoftwareDataType SPHardwareDataType SPApplicationsDataType -json > mode.json
@@ -46,4 +48,40 @@ func SoftwareData() *SoftwareDataInfo {
 		return nil
 	}
 	return &s.SPSoftwareDataType[0]
+}
+
+type SPApplicationsDataType struct {
+	Name         string    `json:"_name"`
+	ArchKind     string    `json:"arch_kind"`
+	LastModified time.Time `json:"lastModified"`
+	ObtainedFrom string    `json:"obtained_from"`
+	Path         string    `json:"path"`
+	SignedBy     []string  `json:"signed_by,omitempty"`
+	Version      string    `json:"version,omitempty"`
+	Info         string    `json:"info,omitempty"`
+}
+
+type ApplicationsData struct {
+	SPApplicationsData []SPApplicationsDataType `json:"SPApplicationsDataType"`
+}
+
+func doAppData() []byte {
+	args := []string{"SPApplicationsDataType", "-json"}
+	cmd, err := exec.Command("system_profiler", args...).Output()
+	if err != nil {
+		return nil
+	}
+	return cmd
+}
+
+var doAppDataStub = doAppData
+var s ApplicationsData
+var x sync.Once
+
+func ApplicationData() []SPApplicationsDataType {
+	x.Do(func() {
+		cmd := doAppDataStub()
+		_ = json.Unmarshal(cmd, &s)
+	})
+	return s.SPApplicationsData
 }

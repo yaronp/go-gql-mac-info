@@ -1,15 +1,30 @@
+
 type Query {
-  sysInfo: SoftwareData
+    sysInfo: SoftwareData
+    sysApps: [ApplicationsData]
+    app(name: String) : ApplicationsData
 }
 
 type SoftwareData {
-      BootMode : String
-      BootVolume : String
-      KernelVersion : String
-      LocalHostname: String
-      OsVersion: String
-      SecureVm: String
-      SystemIntegrity: String
-      Uptime: String
-      UserName: String
+    BootMode : String
+    BootVolume : String
+    KernelVersion : String
+    LocalHostname: String
+    OsVersion: String
+    SecureVm: String
+    SystemIntegrity: String
+    Uptime: String
+    UserName: String
+}
+
+type ApplicationsData {
+    Name            : String
+    ArchKind        : String
+    LastModified    : String
+    ObtainedFrom    : String
+    Path            : String
+    SignedBy        : [String]
+    Version         : String
+    Info            : String
+
 }
